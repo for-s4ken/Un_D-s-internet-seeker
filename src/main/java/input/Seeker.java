@@ -1,5 +1,5 @@
 package input;
-import network.Link;
+import network.GET;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -10,9 +10,10 @@ public class Seeker{
     // INITIALIZATION
 
     private static String userInput;
-    public static String URL;
-    public static String command;
-
+    private static String URL;
+    private static String command;
+    private static String methodName;
+    private static String variables;
     /////
 
     public static void main(String... args){
@@ -29,7 +30,7 @@ public class Seeker{
 
     // STARTING METHOD
 
-    static void start(){
+    public static void start(){
         System.out.println("Please enter command, or 'help' for available commands");
         setInput();
          while (userInput != null){
@@ -41,9 +42,17 @@ public class Seeker{
                  setInput();
              }else if(userInput.equals("quit")){
                  System.exit(1337);
-             }else if(userInput.equals("get")){
+             }else if(userInput.equals("get")) {
                  System.out.println("Please enter full URL or IP address");
-                 setURLInput();
+                 setURLInput("GET");
+                 break;
+             }else if(userInput.equals("method")) {
+                 System.out.println("Please enter full URL or IP address");
+                 setURLInput("METHOD");
+                 break;
+             }else if(userInput.equals("post")){
+                 System.out.println("Please enter full URL or IP address");
+                 setURLInput("POST");
                  break;
              }else{
                  System.out.println("Command not found");
@@ -51,7 +60,9 @@ public class Seeker{
              }
          }
          if(URL != null && command.equals("GET")){
-             Link.main(command, URL);
+             GET.main(URL, "GET");
+         }else if(URL != null && command.equals("METHOD")){
+             GET.main(URL, methodName, variables, "GET");
          }
     }
 
@@ -62,11 +73,35 @@ public class Seeker{
 
         userInput = in.nextLine();
     }
-    static void setURLInput(){
-        Scanner in = new Scanner(System.in);
-        URL = in.nextLine();
-        System.out.println("Connecting...");
-        command = "GET";
+    static void setURLInput(String arg){
+
+        // METHOD VARIABLES INITIALIZING
+
+        if(arg.equals("METHOD")) {
+            Scanner in = new Scanner(System.in);
+            URL = in.nextLine();
+            System.out.println("Please enter method name");
+            Scanner in2 = new Scanner(System.in);
+            methodName = in2.nextLine();
+            System.out.println("Please enter variables");
+            Scanner in3 = new Scanner(System.in);
+            variables = in3.nextLine();
+            command = arg;
+            System.out.println("Connecting...");
+
+            //////////
+        }else if(arg.equals("POST")){
+            Scanner in = new Scanner(System.in);
+            URL = in.nextLine();
+            System.out.println("Please enter keys & values in form: \"key&value, key&value...\"");
+            Scanner in2 = new Scanner(System.in);
+            String toParse = in2.nextLine();
+        }else{
+            Scanner in = new Scanner(System.in);
+            URL = in.nextLine();
+            System.out.println("Connecting...");
+            command = arg;
+        }
     }
     public static void clearConsole() throws  IOException, InterruptedException{
         new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
