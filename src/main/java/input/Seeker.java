@@ -1,5 +1,6 @@
 package input;
 import network.GET;
+import network.INFO;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -17,13 +18,7 @@ public class Seeker{
     /////
 
     public static void main(String... args){
-        try {
             clearConsole();
-        }catch(IOException io){
-            System.out.println("Can`t clear the console!!");
-        }catch (InterruptedException interrupt){
-            System.out.println("Can`t clear the console!!");
-        }
           System.out.println("Welcome to the Un_D`s internet seeker!");
           start();
         }
@@ -50,10 +45,18 @@ public class Seeker{
                  System.out.println("Please enter full URL or IP address");
                  setURLInput("METHOD");
                  break;
-             }else if(userInput.equals("post")){
+             }else if(userInput.equals("post")) {
                  System.out.println("Please enter full URL or IP address");
                  setURLInput("POST");
                  break;
+             }else if(userInput.equals("info")) {
+                 System.out.println("Please enter full URL or IP address");
+                 setURLInput("INFO");
+                 break;
+             }else if(userInput.equals("clear")){
+                 clearConsole();
+                 System.out.println("Please enter command, or 'help' for available commands");
+                 setInput();
              }else{
                  System.out.println("Command not found");
                  setInput();
@@ -61,8 +64,10 @@ public class Seeker{
          }
          if(URL != null && command.equals("GET")){
              GET.main(URL, "GET");
-         }else if(URL != null && command.equals("METHOD")){
+         }else if(URL != null && command.equals("METHOD")) {
              GET.main(URL, methodName, variables, "GET");
+         }else if(URL != null && command.equals("INFO")){
+             INFO.main(URL);
          }
     }
 
@@ -103,7 +108,16 @@ public class Seeker{
             command = arg;
         }
     }
-    public static void clearConsole() throws  IOException, InterruptedException{
-        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+
+
+
+    public static void clearConsole(){
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        }catch (IOException io){
+            System.out.println("Can`t clear the console!!");
+        }catch (InterruptedException interrupt){
+            System.out.println("Can`t clear the console!!");
+        }
     }
 }
