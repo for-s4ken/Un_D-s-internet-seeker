@@ -1,6 +1,7 @@
 package input;
 import network.GET;
 import network.INFO;
+import network.VIEW;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -53,10 +54,14 @@ public class Seeker{
                  System.out.println("Please enter full URL or IP address");
                  setURLInput("INFO");
                  break;
-             }else if(userInput.equals("clear")){
+             }else if(userInput.equals("clear")) {
                  clearConsole();
                  System.out.println("Please enter command, or 'help' for available commands");
                  setInput();
+             }else if(userInput.equals("view")){
+                 System.out.println("Please enter full URL or IP address");
+                 setURLInput("VIEW");
+                 break;
              }else{
                  System.out.println("Command not found");
                  setInput();
@@ -68,6 +73,8 @@ public class Seeker{
              GET.main(URL, methodName, variables, "GET");
          }else if(URL != null && command.equals("INFO")){
              INFO.main(URL);
+         }else if(URL != null && command.equals("VIEW")){
+             VIEW.main(URL);
          }
     }
 
