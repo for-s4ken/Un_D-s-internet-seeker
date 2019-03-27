@@ -1,8 +1,8 @@
 package input;
 import network.GET;
 import network.INFO;
+import network.POST;
 import network.VIEW;
-
 import java.io.IOException;
 import java.util.Scanner;
 import static input.Resources.*;
@@ -15,7 +15,8 @@ public class Seeker{
     private static String URL;
     private static String command;
     private static String methodName;
-    private static String variables;
+    private static String methodVariables;
+    private static String[] postVariables;
     /////
 
     public static void main(String... args){
@@ -70,11 +71,13 @@ public class Seeker{
          if(URL != null && command.equals("GET")){
              GET.main(URL, "GET");
          }else if(URL != null && command.equals("METHOD")) {
-             GET.main(URL, methodName, variables, "GET");
+             GET.main(URL, methodName, methodVariables, "GET");
          }else if(URL != null && command.equals("INFO")){
              INFO.main(URL);
          }else if(URL != null && command.equals("VIEW")){
              VIEW.main(URL);
+         }else if(URL != null && command.equals("POST")){
+             POST.main(postVariables);
          }
     }
 
@@ -97,17 +100,29 @@ public class Seeker{
             methodName = in2.nextLine();
             System.out.println("Please enter variables");
             Scanner in3 = new Scanner(System.in);
-            variables = in3.nextLine();
+            methodVariables = in3.nextLine();
             command = arg;
             System.out.println("Connecting...");
 
             //////////
+
+            // POST VARIABLES INITIALIZING
+
+
         }else if(arg.equals("POST")){
             Scanner in = new Scanner(System.in);
             URL = in.nextLine();
             System.out.println("Please enter keys & values in form: \"key&value, key&value...\"");
             Scanner in2 = new Scanner(System.in);
             String toParse = in2.nextLine();
+            postVariables = toParse.split("\\&");
+            command = arg;
+            System.out.println("Connecting...");
+
+            //////////
+
+
+            // GET/INFO/VIEW INITIALIZING
         }else{
             Scanner in = new Scanner(System.in);
             URL = in.nextLine();
@@ -116,7 +131,7 @@ public class Seeker{
         }
     }
 
-
+            // CONSOLE CLEARING METHOD
 
     public static void clearConsole(){
         try {

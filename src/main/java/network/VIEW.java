@@ -7,7 +7,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class VIEW {
+
     public static void main(String... args) {
+
+
+
         try{
             URL obj = new URL(args[0]);
             HttpURLConnection connection = (HttpURLConnection) obj.openConnection();

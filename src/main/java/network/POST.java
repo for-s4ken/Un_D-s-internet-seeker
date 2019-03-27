@@ -1,39 +1,55 @@
 package network;
 
 import input.Seeker;
-import model.Variable;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class POST {
 
-    // HEADERS FOR POST METHOD
-
-    private static ArrayList<Variable> variables;
-
-    public static void addVariable(String key, String value){
-        variables.add(new Variable(key, value));
-    }
-
-    /////////////////////////
-
     public static void main(String... args){
 
+
+
+        String inputLine;
 
         try {
             String url = args[0];
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            con.setRequestMethod("GET");
 
             // ADDING HEADERS
 
-            for(int i = 0; i < variables.size(); i++){
-                con.addRequestProperty(variables.get(i).getKey(), variables.get(i).getValue());
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            con.setRequestProperty( "charset", "utf-8");
+            con.setRequestProperty( "Content-Length", Integer.toString(args.length));
+            con.setUseCaches(false);
+
+            try( DataOutputStream wr = new DataOutputStream( con.getOutputStream())) {
+                wr.writeChars(Arrays.toString(args));
             }
+
+            ////////////////
+
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                StringBuffer response = new StringBuffer();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+
+                in.close();
+                System.out.println("RESPONSE : ");
+                System.out.println(response.toString());
+                Seeker.start();
+
         }catch (IOException io){
             System.out.println(io.getMessage());
             Seeker.start();

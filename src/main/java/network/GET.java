@@ -5,20 +5,27 @@ import java.net.*;
 import java.io.*;
 
 public class GET {
+
     public static void main(String... args) {
-        String url = args[0];
+
+
+
+        // STARTING CONNECTION
+
     try{
         URL obj;
         HttpURLConnection connection;
         if(args.length == 4){
-            obj = new URL(url + args[1] + "?" + args[2]);
+            obj = new URL(args[0] + args[1] + "?" + args[2]);
             connection = (HttpURLConnection) obj.openConnection();
             connection.setRequestMethod(args[3]);
         }else{
-            obj = new URL(url);
+            obj = new URL(args[0]);
             connection = (HttpURLConnection) obj.openConnection();
             connection.setRequestMethod(args[1]);
         }
+
+        // GETTING RESPONSE
 
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream())); 
         String inputLine;
@@ -27,6 +34,7 @@ public class GET {
         while ((inputLine = in.readLine()) != null) {
            response.append(inputLine);
         }
+
         in.close();
         System.out.println("RESPONSE : ");
         System.out.println(response.toString());
