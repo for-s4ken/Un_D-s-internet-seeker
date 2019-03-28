@@ -6,7 +6,7 @@ commands description:
 
 get - does get call to the server & simply shows server response
 
-post - does post call to the server & shows server response (TODO)
+post - does post call to the server & shows server response
 
 method - calls method on the server 
 
