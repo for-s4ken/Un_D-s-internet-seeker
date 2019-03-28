@@ -4,7 +4,6 @@ import network.INFO;
 import network.POST;
 import network.VIEW;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Scanner;
 import static input.Resources.*;
 
@@ -117,10 +116,14 @@ public class Seeker{
             System.out.println("Please enter keys & values in form: \"key&value, key&value...\"");
             Scanner in2 = new Scanner(System.in);
             String toParse = in2.nextLine();
-            postVariables = toParse.split("\\&");
+            postVariables = toParse.split("[&]|[,]");
+            // Removing spaces
+            for(int i = 0; i < postVariables.length; i++){
+                postVariables[i] = postVariables[i].replaceAll("\\s","");
+            }
+            //
             command = arg;
             System.out.println("Connecting...");
-            System.out.println(Arrays.toString(postVariables));
 
             //////////
 

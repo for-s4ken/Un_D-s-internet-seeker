@@ -2,13 +2,14 @@ package network;
 
 import input.Seeker;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
+import java.net.URLEncoder;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Scanner;
+
 
 public class POST {
 
@@ -18,11 +19,33 @@ public class POST {
 
     public static void main(String... args){
 
-
-
         String inputLine;
 
+
+        // String array ==> LinkedHashMap<String, String> ==> StringBuilder
+
+
+        Map<String,String> params = new LinkedHashMap<>();
+
+        for(int i = 0; i < args.length; i++){
+            params.put(args[i], args[++i]);
+        }
+
+        System.out.println(params.toString());
+
         try {
+
+            StringBuilder postData = new StringBuilder();
+            for (Map.Entry<String,String> param : params.entrySet()) {
+                if (postData.length() != 0) postData.append('&');
+                postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                postData.append('=');
+                postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+            }
+
+
+         ///////////////////////////////////////////////////////////////////
+
 
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -36,9 +59,12 @@ public class POST {
             con.setRequestProperty( "Content-Length", Integer.toString(args.length));
             con.setUseCaches(false);
 
+            // StringBuilder ==> Byte array
+
             try( DataOutputStream wr = new DataOutputStream( con.getOutputStream())) {
-                wr.writeChars(Arrays.toString(args));
+                wr.write(postData.toString().getBytes("UTF-8"));
             }
+            con.connect();
 
             ////////////////
 
@@ -49,12 +75,21 @@ public class POST {
                 while ((inputLine = in.readLine()) != null) {
                     response.append(inputLine);
                 }
-
                 in.close();
                 System.out.println("RESPONSE : ");
                 System.out.println(response.toString());
-                Seeker.start();
-
+/*                System.out.println("Save response into .json? (Y/n)");
+                Scanner keyboard = new Scanner(System.in);
+                char answer = keyboard.next().charAt(0);
+                if(answer == 'y' | answer == 'Y'){
+                    File f = new File(System.getProperty("user.dir") + "//saved.json");
+                    PrintWriter writer = new PrintWriter("saved.json");
+                    writer.println(response.toString());
+                    System.out.println("FILE NAME : " + f.getName());
+                    Seeker.start();
+                }else{
+                    Seeker.start();
+                }   */ // TODO
         }catch (IOException io){
             System.out.println(io.getMessage());
             Seeker.start();
