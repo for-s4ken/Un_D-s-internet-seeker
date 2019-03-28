@@ -4,6 +4,7 @@ import network.INFO;
 import network.POST;
 import network.VIEW;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Scanner;
 import static input.Resources.*;
 
@@ -77,6 +78,7 @@ public class Seeker{
          }else if(URL != null && command.equals("VIEW")){
              VIEW.main(URL);
          }else if(URL != null && command.equals("POST")){
+             POST.setUrl(URL);
              POST.main(postVariables);
          }
     }
@@ -118,6 +120,7 @@ public class Seeker{
             postVariables = toParse.split("\\&");
             command = arg;
             System.out.println("Connecting...");
+            System.out.println(Arrays.toString(postVariables));
 
             //////////
 

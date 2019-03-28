@@ -12,6 +12,10 @@ import java.util.Arrays;
 
 public class POST {
 
+    private static String url;
+
+    public static void setUrl(String toSet){url = toSet;}
+
     public static void main(String... args){
 
 
@@ -19,12 +23,13 @@ public class POST {
         String inputLine;
 
         try {
-            String url = args[0];
+
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
             // ADDING HEADERS
 
+            con.setDoOutput(true);
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             con.setRequestProperty( "charset", "utf-8");
