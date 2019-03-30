@@ -3,6 +3,9 @@ import network.GET;
 import network.INFO;
 import network.POST;
 import network.VIEW;
+import threadsNetwork.ThreadGET;
+import threadsNetwork.ThreadINFO;
+
 import java.io.IOException;
 import java.util.Scanner;
 import static input.Resources.*;
@@ -17,6 +20,7 @@ public class Seeker{
     private static String methodName;
     private static String methodVariables;
     private static String[] postVariables;
+
     /////
 
     public static void main(String... args){
@@ -59,9 +63,17 @@ public class Seeker{
                  clearConsole();
                  System.out.println("Please enter command, or 'help' for available commands");
                  setInput();
-             }else if(userInput.equals("view")){
+             }else if(userInput.equals("view")) {
                  System.out.println("Please enter full URL or IP address");
                  setURLInput("VIEW");
+                 break;
+             }else if(userInput.equals("threadGet")) {
+                 System.out.println("Please enter full URL or IP address");
+                 setURLInput("ThreadGET");
+                 break;
+             }else if(userInput.equals("threadInfo")){
+                 System.out.println("Please enter full URL or IP address");
+                 setURLInput("ThreadINFO");
                  break;
              }else{
                  System.out.println("Command not found");
@@ -79,6 +91,10 @@ public class Seeker{
          }else if(URL != null && command.equals("POST")){
              POST.setUrl(URL);
              POST.main(postVariables);
+         }else if(URL != null && command.equals("ThreadGET")){
+             ThreadGET.main(URL);
+         }else if(URL != null && command.equals("ThreadINFO")){
+             ThreadINFO.main(URL);
          }
     }
 
@@ -110,7 +126,7 @@ public class Seeker{
             // POST VARIABLES INITIALIZING
 
 
-        }else if(arg.equals("POST")){
+        }else if(arg.equals("POST")) {
             Scanner in = new Scanner(System.in);
             URL = in.nextLine();
             System.out.println("Please enter keys & values in form: \"key&value, key&value...\"");
@@ -118,8 +134,8 @@ public class Seeker{
             String toParse = in2.nextLine();
             postVariables = toParse.split("[&]|[,]");
             // Removing spaces
-            for(int i = 0; i < postVariables.length; i++){
-                postVariables[i] = postVariables[i].replaceAll("\\s","");
+            for (int i = 0; i < postVariables.length; i++) {
+                postVariables[i] = postVariables[i].replaceAll("\\s", "");
             }
             //
             command = arg;
@@ -127,6 +143,21 @@ public class Seeker{
 
             //////////
 
+            // CONNECTION WITH THREADS INITIALIZING
+
+        }else if(arg.equals("ThreadGET")) {
+            Scanner in = new Scanner(System.in);
+            URL = in.nextLine();
+            System.out.println("Connecting...");
+            command = arg;
+
+        }else if(arg.equals("ThreadINFO")){
+            Scanner in = new Scanner(System.in);
+            URL = in.nextLine();
+            System.out.println("Connecting...");
+            command = arg;
+
+            //////////
 
             // GET/INFO/VIEW INITIALIZING
         }else{

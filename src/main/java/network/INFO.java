@@ -10,7 +10,7 @@ public class INFO {
 
     public static void main(String... args) {
 
-
+        // STARTING CONNECTION
 
         try {
             URL obj = new URL(args[0]);
@@ -21,6 +21,8 @@ public class INFO {
             System.out.println("RESPONSE CODE : " + connection.getResponseCode());
             System.out.println("USING PROXY : " + connection.usingProxy());
             System.out.println("RESPONSE MESSAGE : " + connection.getResponseMessage());
+
+
             Seeker.start();
         } catch (IOException io) {
             System.out.println(io.getMessage());

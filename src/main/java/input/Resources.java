@@ -2,7 +2,7 @@ package input;
 
 public class Resources{
     
-    private static String[] commands = { "get", "post", "method", "info", "view", "clear", "quit"};
+    private static String[] commands = { "get", "threadGet", "post", "method", "info", "threadInfo", "view", "clear", "quit"};
 
     public static String[] getCommands(){return commands;}
 }

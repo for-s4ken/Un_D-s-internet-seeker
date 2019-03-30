@@ -27,8 +27,13 @@ public class POST {
 
         Map<String,String> params = new LinkedHashMap<>();
 
-        for(int i = 0; i < args.length; i++){
-            params.put(args[i], args[++i]);
+        if(args.length > 1){
+            for(int i = 0; i < args.length; i++){
+                params.put(args[i], args[++i]);
+            }
+        }else{
+            System.out.println("No variables to send");
+            Seeker.start();
         }
 
         System.out.println(params.toString());
@@ -77,19 +82,27 @@ public class POST {
                 }
                 in.close();
                 System.out.println("RESPONSE : ");
-                System.out.println(response.toString());
-/*                System.out.println("Save response into .json? (Y/n)");
+                System.out.println(response);
+
+                // SAVING FILE
+
+                System.out.println("Save response into .json? (Y/n)");
                 Scanner keyboard = new Scanner(System.in);
                 char answer = keyboard.next().charAt(0);
-                if(answer == 'y' | answer == 'Y'){
+                if(answer == 'y' || answer == 'Y'){
                     File f = new File(System.getProperty("user.dir") + "//saved.json");
-                    PrintWriter writer = new PrintWriter("saved.json");
-                    writer.println(response.toString());
+                    String encoding = System.getProperty("console.encoding", "windows-1251");
+                    PrintWriter writer = new PrintWriter("saved.json", encoding);
+                    writer.println(response);
                     System.out.println("FILE NAME : " + f.getName());
+                    writer.flush();
+                    writer.close();
                     Seeker.start();
                 }else{
                     Seeker.start();
-                }   */ // TODO
+                }
+
+
         }catch (IOException io){
             System.out.println(io.getMessage());
             Seeker.start();

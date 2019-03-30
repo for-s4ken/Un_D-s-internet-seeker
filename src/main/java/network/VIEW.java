@@ -23,11 +23,18 @@ public class VIEW {
                 response.append(inputLine);
             }
             in.close();
+
+            // SAVING FILE
+
             File f = new File(System.getProperty("user.dir") + "//saved.html");
             String encoding = System.getProperty("console.encoding", "windows-1251");
             PrintWriter writer = new PrintWriter("saved.html", encoding);
             writer.println(response);
             System.out.println("FILE NAME : " + f.getName());
+            writer.flush();
+            writer.close();
+
+
             Seeker.start();
         }catch(IOException io){
             System.out.println(io.getMessage());
