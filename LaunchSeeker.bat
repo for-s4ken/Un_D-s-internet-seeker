@@ -1,1 +1,1 @@
-java -Dfile.encoding=Windows-1251 -cp %cd%\out\production\classes input.Seeker
+java -Dfile.encoding=Windows-1251 -cp "%cd%"\out\production\classes input.Seeker
