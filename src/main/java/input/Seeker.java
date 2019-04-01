@@ -4,7 +4,6 @@ import network.INFO;
 import network.POST;
 import network.VIEW;
 import threadsNetwork.ThreadGET;
-import threadsNetwork.ThreadINFO;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -71,10 +70,6 @@ public class Seeker{
                  System.out.println("Please enter full URL or IP address");
                  setURLInput("ThreadGET");
                  break;
-             }else if(userInput.equals("threadInfo")){
-                 System.out.println("Please enter full URL or IP address");
-                 setURLInput("ThreadINFO");
-                 break;
              }else{
                  System.out.println("Command not found");
                  setInput();
@@ -93,8 +88,6 @@ public class Seeker{
              POST.main(postVariables);
          }else if(URL != null && command.equals("ThreadGET")){
              ThreadGET.main(URL);
-         }else if(URL != null && command.equals("ThreadINFO")){
-             ThreadINFO.main(URL);
          }
     }
 
@@ -148,12 +141,9 @@ public class Seeker{
         }else if(arg.equals("ThreadGET")) {
             Scanner in = new Scanner(System.in);
             URL = in.nextLine();
-            System.out.println("Connecting...");
-            command = arg;
-
-        }else if(arg.equals("ThreadINFO")){
-            Scanner in = new Scanner(System.in);
-            URL = in.nextLine();
+            System.out.println("Please enter connections count");
+            Scanner in2 = new Scanner(System.in);
+            ThreadGET.connectionsCount = in2.nextInt();
             System.out.println("Connecting...");
             command = arg;
 

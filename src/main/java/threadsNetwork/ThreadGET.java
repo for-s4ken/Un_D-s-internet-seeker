@@ -2,13 +2,13 @@ package threadsNetwork;
 
 import input.Seeker;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class ThreadGET {
+
+    public static int connectionsCount;
 
     public static void main(String... args){
 
@@ -16,29 +16,19 @@ public class ThreadGET {
 
             URL obj = new URL(args[0]);
 
-            new Thread(() -> {
-                try {
-                    HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
-                    connection.setRequestMethod("GET");
+            for(int i = 0; i < connectionsCount; i++){
+                new Thread(() -> {
+                    try {
+                        HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
+                        connection.setRequestMethod("GET");
 
-                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    String inputLine;
-                    StringBuffer response = new StringBuffer();
-
-                    while ((inputLine = in.readLine()) != null) {
-                        response.append(inputLine);
+                        System.out.println("CODE :" + connection.getResponseCode() + " , " + connection.getResponseMessage());
+                    } catch (Exception ex) {
+                        System.out.println(ex.getMessage());
                     }
-
-                    in.close();
-
-                    System.out.println(response.toString());
-                    Seeker.start();
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
-                    Seeker.start();
-                }
-            }).run();
-
+                }).run();
+            }
+                Seeker.start();
         }catch (MalformedURLException malf){
             System.out.println("Wrong or not full URL");
             Seeker.start();
